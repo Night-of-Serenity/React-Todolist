@@ -1,7 +1,8 @@
 $primary: #db4c3f;
 $grey: rgb(234, 234, 234);
-$sidebar-width: 200px;
+$sidebar-width: 300px;
 $header-height: 50px;
+
 .container {
   display: grid;
   grid-template-rows: $header-height calc(100vh - $header-height);
@@ -12,15 +13,98 @@ $header-height: 50px;
   background-color: $primary;
   grid-column: 1/3;
   grid-row: 1/2;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0.5rem 2rem;
+  font-size: 20px;
+  color: $grey;
+
+  & > span {
+    display: flex;
+    cursor: pointer;
+    font-size: 24;
+  }
+}
+
+li {
+  list-style: none;
 }
 
 .sidebar {
-  grid-column: 1/2;
+  // background-color: aqua;
   grid-row: 2/3;
-  background-color: aquamarine;
+  grid-column: 1/2;
+  position: sticky;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 30px;
+
+  &__middle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+
+    & > span {
+      display: flex;
+    }
+    & > h6 {
+      font-size: 20px;
+    }
+  }
 }
 
 .content {
   grid-row: 2/3;
   grid-column: 2/3;
+}
+
+.generic__lists {
+  & > li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 5px 0;
+    border-radius: 4px;
+    padding: 10px;
+
+    &:hover {
+      background-color: $grey;
+    }
+
+    & > span {
+      display: flex;
+    }
+  }
+}
+
+.active {
+  background-color: $grey;
+}
+
+.project__lists {
+  & > li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 5px 0;
+    border-radius: 4px;
+    padding: 10px;
+
+    &:hover {
+      background-color: $grey;
+    }
+
+    & > span {
+      display: flex;
+    }
+  }
 }
