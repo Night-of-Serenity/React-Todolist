@@ -40,13 +40,6 @@ $grey: rgb(234, 234, 234);
   font-size: 12px;
 }
 
-// effect ติ้กถูกตอน hover ที่ <li>
-.checkbox__container:hover {
-  .checkbox__icon {
-    display: inline;
-  }
-}
-
 .edit__icon,
 .delete__icon {
   color: gray;

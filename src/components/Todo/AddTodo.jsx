@@ -5,7 +5,7 @@ import { useState } from "react";
 export function AddTodo() {
   const [isAddMode, setIsAddMode] = useState(false);
   const handleClickAddTask = (e) => {
-    console.log("add task");
+    // console.log("add task");
     setIsAddMode(true);
   };
 
@@ -17,7 +17,7 @@ export function AddTodo() {
           <h3>Add task</h3>
         </div>
       ) : (
-        <TodoForm onSetIsAddMode={setIsAddMode} />
+        <TodoForm submitText={"Add Task"} onSetIsShowForm={setIsAddMode} />
       )}
     </>
   );
