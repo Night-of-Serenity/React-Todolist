@@ -1,15 +1,18 @@
 import styles from "./TodoForm.module.scss";
 import React, { useState } from "react";
 
-export function TodoForm() {
-  const [task, setTask] = React.useState("");
+export function TodoForm({ onSetIsAddMode }) {
+  // # 1 : Logic Section
+  const [task, setTask] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Summit");
+    onSetIsAddMode(false);
+    console.log("Submit");
   };
-
   const handleClickCancel = (e) => {
     console.log("cancel");
+    onSetIsAddMode(false);
   };
 
   const handleChangeInput = (e) => {
@@ -17,9 +20,10 @@ export function TodoForm() {
     setTask(e.target.value);
   };
 
+  // # 2 : UI-Section
   return (
     <form className={styles.todo__form__container} onSubmit={handleSubmit}>
-      <input className={styles.todo__form__input} placeholder="Task Name" onChange={handleChangeInput} value={task} />
+      <input className={styles.todo__form__input} placeholder="Task Name" value={task} onChange={handleChangeInput} />
       <div className={styles.todo__form__footer}>
         <p className={styles.todo__error}>Title is required</p>
         <div className={styles.todo__form__buttons}>
