@@ -45,12 +45,6 @@ export function Sidebar() {
             </span>
             <h6>Project-B</h6>
           </li>
-          {/* <li>
-          <span>
-            <FaCalendarAlt />
-          </span>
-          <h6>Next 7 Days</h6>
-        </li> */}
         </ul>
       </section>
     </aside>
