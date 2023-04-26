@@ -7,7 +7,7 @@ TodoForm.propTypes = {
   onSetIsShowForm: PropTypes.func.isRequired,
   onAddTodo: PropTypes.func,
   onEditTodo: PropTypes.func,
-  todo: PropTypes.oneOfType([PropTypes.object, undefined]), // undefined , {id : number | string , task : string, status : bool, due_date:string}
+  todo: PropTypes.oneOfType([PropTypes.object]), // undefined(type undefined ใส่โดยไม่ต้องใส่) , {id : number | string , task : string, status : bool, due_date:string}
 };
 
 export function TodoForm({ submitText, onSetIsShowForm, todo, onAddTodo, onEditTodo }) {

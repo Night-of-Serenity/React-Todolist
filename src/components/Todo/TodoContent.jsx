@@ -1,13 +1,11 @@
 import { AddTodo } from "./AddTodo";
 import { TodoHeader } from "./TodoHeader";
 import { TodoList } from "./TodoList";
-import mockData from "../../data/todos.json";
-import { useState } from "react";
+
 import { v4 as uuidv4 } from "uuid";
 
-export function TodoContent() {
+export function TodoContent({ todos, setTodos }) {
   // Logic
-  const [todos, setTodos] = useState(mockData);
 
   // Handdle Add Todo
   const handleAddTodo = (newTask) => {
@@ -56,7 +54,7 @@ export function TodoContent() {
   return (
     <main className="content">
       {/* Todo-Header */}
-      <TodoHeader />
+      <TodoHeader title="Inbox" />
       {/* Add Todo */}
       <AddTodo onAddTodo={handleAddTodo} />
       {/* TodoList */}
