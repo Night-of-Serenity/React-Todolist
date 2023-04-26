@@ -1,9 +1,18 @@
 import styles from "./TodoForm.module.scss";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
-export function TodoForm({ submitText, onSetIsShowForm, oldTask }) {
+TodoForm.propTypes = {
+  submitText: PropTypes.string.isRequired,
+  onSetIsShowForm: PropTypes.func.isRequired,
+  onAddTodo: PropTypes.func,
+  onEditTodo: PropTypes.func,
+  todo: PropTypes.oneOfType([PropTypes.object, undefined]), // undefined , {id : number | string , task : string, status : bool, due_date:string}
+};
+
+export function TodoForm({ submitText, onSetIsShowForm, todo, onAddTodo, onEditTodo }) {
   // # 1 : Logic Section
-  const [task, setTask] = useState(oldTask || "");
+  const [task, setTask] = useState(todo?.task || "");
   const [isError, setIsError] = useState(false);
 
   const handleSubmit = (e) => {
@@ -14,6 +23,11 @@ export function TodoForm({ submitText, onSetIsShowForm, oldTask }) {
       setIsError(true);
       return;
     }
+
+    // validate passed , execute addTodo
+    // onAddTodo(task) // from <TodoContent/>
+    if (todo) onEditTodo(todo.id, { task }); // send => 1.newTask 2. todoId
+    else onAddTodo(task);
 
     onSetIsShowForm?.(false);
   };
