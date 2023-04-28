@@ -12,22 +12,34 @@ function App() {
   const [filterList, setFilterList] = useState([]); // filter todo
 
   useEffect(() => {
-    // Run After Did Mount
-    axios({
-      method: "get",
-      url: " http://localhost:8080/todos",
-    })
-      .then((response) => {
-        console.log(response.status);
-        console.log(response);
-        console.log(response.data);
-        console.log(response.data.todos);
+    // Run After DID MOUNT (เกิดแล้ว)
 
+    // axios({
+    //     method: 'get',
+    //     url : 'http://localhost:8080/todos'
+    // }).then(response => {
+
+    //     let todoList = response.data.todos
+    //     setTodos(todoList)
+    //     setFilterList(todoList)
+
+    // } ).catch(err=> {
+    //     console.log(err.response.status)
+    // })
+
+    async function fetchAllTodo() {
+      try {
+        // let response = await axios({method:'get', url: "http://localhost:8080/todos"})
+        let response = await axios.get("http://localhost:8080/todos");
         let todoList = response.data.todos;
         setTodos(todoList);
         setFilterList(todoList);
-      })
-      .catch((err) => console.log(err.response.status));
+      } catch (error) {
+        console.log(error.response.status);
+      }
+    }
+
+    fetchAllTodo();
   }, []);
 
   // Filter Todo
@@ -71,7 +83,7 @@ function App() {
     }
     // Sort by date
     else if (sortType === "sortDate") {
-      console.log(sortType);
+      // console.log(sortType);
       sortedLists = [...filterList];
       sortedLists.sort((a, b) => {
         if (a.date > b.date) {
@@ -81,8 +93,7 @@ function App() {
     }
     // Sort by task
     else if (sortType === "sortTask") {
-      console.log(sortType);
-      console.log(sortType);
+      // console.log(sortType);
       sortedLists = [...filterList];
       sortedLists.sort((a, b) => {
         if (a.task > b.task) {
@@ -92,7 +103,7 @@ function App() {
     }
     // Reverse sort
     else if (sortType === "reverseSort") {
-      console.log(sortType);
+      // console.log(sortType);
       sortedLists = [...filterList];
       sortedLists.reverse();
     }
