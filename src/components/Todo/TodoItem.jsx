@@ -21,7 +21,7 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
     try {
       // ส่ง Request
       let todoRequestObj = { ...oldTodo, ...updateObj };
-      let response = await axios.put(`http://localhost:8080/todos/${todo.id}`, todoRequestObj);
+      let response = await axios.put(`http://localhost:8080/todos/${oldTodo.id}`, todoRequestObj);
       let updatedTodo = response.data.todo;
       // sync state ใน react
       onEditTodo(updatedTodo.id, updatedTodo);
@@ -35,8 +35,14 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
     console.log(todo.id);
   };
 
-  const handleDeleteTodo = () => {
-    onDeleteTodo(todo.id);
+  const handleDeleteTodo = async (todoId) => {
+    try {
+      let response = await axios.delete(`http://localhost:8080/todos/${todoId}`);
+      console.log(response.status);
+      onDeleteTodo(todoId);
+    } catch (error) {
+      console.log(error.response.status);
+    }
   };
 
   let checkboxStyle = todo.status ? styles.checkbox__icon__done : styles.checkbox__icon;
@@ -57,7 +63,7 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
             <HiPencil />
           </div>
 
-          <div className={styles.delete__icon} onClick={handleDeleteTodo}>
+          <div className={styles.delete__icon} onClick={() => handleDeleteTodo(todo.id)}>
             <HiTrash />
           </div>
 
