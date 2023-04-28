@@ -1,7 +1,6 @@
 import { TodoItem } from "./TodoItem";
 
-export function TodoList({ todos, onEditTodo, onDeleteTodo }) {
-  // console.log("todolist run");
+export function TodoLists({ todos, onEditTodo, onDeleteTodo, onTodoSort }) {
   return (
     <ul>
       {todos.map((todoObj) => (
@@ -10,3 +9,5 @@ export function TodoList({ todos, onEditTodo, onDeleteTodo }) {
     </ul>
   );
 }
+
+// {id:1, task: asdadsasdas, status : false, due_date : 2002-04-20}

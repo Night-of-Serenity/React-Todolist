@@ -1,15 +1,17 @@
 import styles from "./AddTodo.module.scss";
-import { TodoForm } from "./TodoForm";
 import { useState } from "react";
+import { TodoForm } from "./TodoForm";
 
-export function AddTodo({ onAddTodo }) {
+export function AddTodo({ setTodos, setFilterList }) {
+  // # Logic & State
   const [isAddMode, setIsAddMode] = useState(false);
 
-  const handleClickAddTask = (e) => {
-    // console.log("add task");
+  const handleClickAddTask = () => {
+    // console.log("Open form")
     setIsAddMode(true);
   };
 
+  // # UI
   return (
     <>
       {!isAddMode ? (
@@ -18,7 +20,15 @@ export function AddTodo({ onAddTodo }) {
           <h3>Add task</h3>
         </div>
       ) : (
-        <TodoForm submitText={"Add Task"} onSetIsShowForm={setIsAddMode} onAddTodo={onAddTodo} />
+        <TodoForm
+          submitText="Add Task"
+          onSetIsShowForm={setIsAddMode}
+          // onSetIsShowForm="5555"
+
+          setTodos={setTodos}
+          setFilterList={setFilterList}
+          // todo == undefined
+        />
       )}
     </>
   );

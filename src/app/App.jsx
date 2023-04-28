@@ -8,24 +8,12 @@ import { getSevenDayRange } from "../utils/DateUtils";
 import axios from "axios";
 
 function App() {
-  const [todos, setTodos] = useState([]); // Original todo
-  const [filterList, setFilterList] = useState([]); // filter todo
+  // ## LOGIC : HOOK
+  const [todos, setTodos] = useState([]); // Orginal todos
+  const [filterList, setFilterList] = useState([]); // filter todos
 
   useEffect(() => {
     // Run After DID MOUNT (เกิดแล้ว)
-
-    // axios({
-    //     method: 'get',
-    //     url : 'http://localhost:8080/todos'
-    // }).then(response => {
-
-    //     let todoList = response.data.todos
-    //     setTodos(todoList)
-    //     setFilterList(todoList)
-
-    // } ).catch(err=> {
-    //     console.log(err.response.status)
-    // })
 
     async function fetchAllTodo() {
       try {
@@ -42,6 +30,9 @@ function App() {
     fetchAllTodo();
   }, []);
 
+  useEffect(() => {});
+
+  // ## LOGIC : FN ต่างๆ
   // Filter Todo
   const handleFilterLists = (index) => {
     const [nowStr, nextSevenStr] = getSevenDayRange();
@@ -62,7 +53,7 @@ function App() {
 
   // Search Todo
   const handleSearch = (searchText) => {
-    const newTodo = filterList.filter((todoObj) => todoObj.task.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
+    const newTodo = todos.filter((todoObj) => todoObj.task.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     // setTodos(newTodo)
     setFilterList(newTodo);
   };
@@ -115,7 +106,7 @@ function App() {
     <div className="container">
       <Header onSearchText={handleSearch} />
       <Sidebar onSelectTab={handleFilterLists} />
-      <TodoContent todos={filterList} setTodos={setFilterList} onTodoSort={handleSort} />
+      <TodoContent todos={filterList} setTodos={setTodos} onTodoSort={handleSort} setFilterList={setFilterList} />
     </div>
   );
 }
