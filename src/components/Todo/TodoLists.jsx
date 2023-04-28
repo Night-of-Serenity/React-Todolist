@@ -1,6 +1,6 @@
 import { TodoItem } from "./TodoItem";
 
-export function TodoLists({ todos, onEditTodo, onDeleteTodo, onTodoSort }) {
+export function TodoLists({ todos, onEditTodo, onDeleteTodo }) {
   return (
     <ul>
       {todos.map((todoObj) => (
