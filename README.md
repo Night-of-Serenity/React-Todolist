@@ -1,7 +1,3 @@
-# FOR UI TASK
-
-# Hello Everyone
-
 # TASK-1 : Create Project by using CRA
 
 - `mkdir todo-list`
@@ -417,23 +413,292 @@ export function TodoItem({ item }) {
 
 ## 9.ทำ CRUD
 
-## 10.ทำ Date
+# React - WED 25
+
+outline
+
+- ทำ Update กับ DeleteTodo (จบ core-feature)
+- propsTypes
+- ทำ FILTER (by Date) feature && DayJS?
+- ทำ SEARCH feature
+- ทำ Common Component
+- ทำ SORT feature
+
+## 9.ทำ Update-status, Delete Todo
+
+## 10.ทำ Date : Reset Global Style
 
 ```css
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
+input[type="text"],
 input[type="date"] {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  // border: none;
   outline: none;
+}
+```
+
+# Filter (By Date Feature)
+
+## create util function
+
+```js
+// INPUT : YYYY-MM-DD or undefined
+// OUTPUT : ex. May 3, 2023
+export const convertDate = (dateStr) => {
+  const date = new Date(dateStr);
+  const options = { month: "long", day: "numeric", year: "numeric" };
+  const formattedDate = date.toLocaleDateString("en-US", options);
+
+  return formattedDate;
+};
+
+// INPUT :
+// OUTPUT : Array of [today,nextSevenDay] in YYYY-MM-DD
+export const getSevenDayRange = () => {
+  const today = new Date();
+
+  const seven = new Date(Date.now() + 7 * 24 * 3600 * 1000);
+
+  const todayStr = today.toISOString().slice(0, 10);
+  const sevenStr = seven.toISOString().slice(0, 10);
+
+  return [todayStr, sevenStr];
+};
+```
+
+## refactor code ใน todoHeader โดยใช้ utils
+
+## improve ui ใน todoItem ให้แสดงวันที่ได้
+
+```js
+<>
+  <p className={`${item.status && styles.done}`}>{item.task}</p>
+  <span className={styles.date__text}>{item.date && convertDate(item.date)}</span>
+</>
+```
+
+```css
+.date__text {
+  color: gray;
+  font-size: 12px;
+}
+```
+
+## lifting state (to App)
+
+## Biding Internal State of SideBar
+
+## Do filer logic in App
+
+# Search
+
+## UI + Internal Binding
+
+```js
+<div className="header__search__container">
+  <span className="header__search__icon">
+    <FaSearch />
+  </span>
+  <input type="text" className="header__search__input" placeholder="search" onChange={handleChange} value={searchValue} />
+</div>
+```
+
+```css
+.header__search__container {
+  width: 300px;
+  position: relative;
+
+  border-radius: 4px;
+  // display: flex;
+}
+
+.header__search__icon {
+  position: absolute;
+  display: flex;
+  font-size: 16px;
+  font-weight: 200;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: grey;
+}
+.header__search__input {
+  width: 100%;
+  padding: 5px;
+  padding-left: 30px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  // border: none;
+  font-size: 16px;
+  outline: none;
+
+  color: gray;
+}
+```
+
+# Common Component
+
+```js
+import styles from "./Button.module.scss";
+
+export function Button({ text, active = true }) {
+  let btnStyles = active ? styles.btn__primary : styles.btn__secondary;
+  return <button className={`${styles.btn} ${btnStyles}`}>{text}</button>;
+}
+```
+
+```css
+.btn {
+  border: none;
+  padding: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  flex: 1;
+
+  &__primary {
+    background-color: #db4c3f;
+    color: white;
+  }
+
+  &__secondary {
+    background-color: rgb(220, 220, 220);
+    color: black;
+  }
+}
+```
+
+# SORT
+
+- UI FIXED BAR
+
+```js
+<div className={styles.header}>
+  <div className={styles.header__status__bar}>
+    <h1>Inbox</h1>
+    <span>{convertDate()}</span>
+  </div>
+
+  <div className={styles.header__control__bar}>
+    <Button text="status" />
+    <Button text="date" active={false} />
+    <Button text="task" active={false} />
+    <span className={styles.control__bar__icon}>
+      <HiOutlineSwitchVertical />
+    </span>
+  </div>
+</div>
+```
+
+```css
+/* HeaderTodo */
+.header {
+  display: flex;
+  justify-content: space-between;
+  // margin-bottom: 10px;
+
+  // NEW : for STICKY !!!
+  position: sticky;
+  top: 0;
+  background-color: white;
+  padding-top: 20px;
+  padding-bottom: 10px;
+
+  // move old lay-out to header__status__bar
+  &__status__bar {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    & > h1 {
+      font-size: 24px;
+    }
+    & > span {
+      font-size: 12px;
+      color: grey;
+    }
+  }
+
+  &__control__bar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.control__bar {
+  &__icon {
+    display: flex;
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+```
+
+- อย่าลืม relative ใน .content เพราะจะทำ sticky AddBar
+
+```css
+/* Main content area */
+.content {
+    /* flex-grow: 1;
+    overflow-y: scroll;
+    padding: 20px;
+    background-color: #fff;
+    grid-row: 2/-1;
+    grid-column: 2/3;
+    overflow-y: auto; */
+
+    // for-fixed header
++    position: relative;
++    padding-top: 0;
+}
+```
+
+## Add BTN and Icon
+
+## LOGIC SORT ?
+
+# EDIT DUE_DATE - FEATURE
+
+- UI
+
+```diff
+<form className={styles.todo__form__container} onSubmit={handleSubmit}>
++    <input
++        className={styles.todo__form__input}
++        placeholder='Task Name'
++        value={task}
++        onChange={handleChangeInput}
++    />
++    <div className={styles.todo__form__date}>
++        <input type='date' onChange={handleChangeDate} />
++    </div>
+    <div className={styles.todo__form__footer}>
+        {error && <p className={styles.todo__error}>Task Name is required</p>}
+        <div className={styles.todo__form__buttons}>
+            <button type='button' onClick={handleCancel}>
+                Cancel
+            </button>
+            <button type='submit'>{textConfirm}</button>
+        </div>
+    </div>
+</form>
+```
+
+```css
+.todo__form__footer {
+  /* display: flex;
+    justify-content: space-between; */
+  /* align-items: center; */
+
+  // add more
+  border-top: 1px solid rgb(220, 220, 220);
+  padding-top: 10px;
+}
+
+.todo__form__date {
+  & > input {
+    width: 140px;
+  }
 }
 ```

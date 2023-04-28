@@ -4,7 +4,7 @@ import { TodoList } from "./TodoList";
 
 import { v4 as uuidv4 } from "uuid";
 
-export function TodoContent({ todos, setTodos }) {
+export function TodoContent({ todos, setTodos, onTodoSort }) {
   // Logic
 
   // Handdle Add Todo
@@ -29,7 +29,7 @@ export function TodoContent({ todos, setTodos }) {
     // #1 FindIndex
     const foundedIndex = todos.findIndex((todoObj) => todoObj.id === todoId);
     // Not founded
-    if (foundedIndex == -1) return;
+    if (foundedIndex === -1) return;
     // Founded
     const newTodos = [...todos];
     newTodos[foundedIndex] = { ...newTodos[foundedIndex], ...updateObj };
@@ -54,7 +54,7 @@ export function TodoContent({ todos, setTodos }) {
   return (
     <main className="content">
       {/* Todo-Header */}
-      <TodoHeader title="Inbox" />
+      <TodoHeader title="Inbox" onTodoSort={onTodoSort} />
       {/* Add Todo */}
       <AddTodo onAddTodo={handleAddTodo} />
       {/* TodoList */}
