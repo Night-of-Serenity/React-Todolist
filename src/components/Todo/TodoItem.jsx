@@ -12,24 +12,22 @@ TodoItem.propTypes = {
   todo: PropTypes.oneOfType([PropTypes.object]),
 };
 
-//todoSchema :  {id:1, task: asdadsasdas, status : false, due_date : 2002-04-20}
+// /todoSchema :  {id:1, task: asdadsasdas, status : false, due_date : 2002-04-20}
 export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
   const [isEdit, setIsEdit] = useState(false);
   // console.log(todo.id)
 
-  const updateTodoStatus = async () => {
+  const updateTodo = async (oldTodo, updateObj) => {
     try {
       // ส่ง Request
-      let todoRequestObj = { ...todo, status: !todo.status };
+      let todoRequestObj = { ...oldTodo, ...updateObj };
       let response = await axios.put(`http://localhost:8080/todos/${todo.id}`, todoRequestObj);
       let updatedTodo = response.data.todo;
       // sync state ใน react
-      onEditTodo(updatedTodo.id, { status: updatedTodo.status });
+      onEditTodo(updatedTodo.id, updatedTodo);
     } catch (error) {
       console.log(error.response.status);
     }
-
-    // onEditTodo(todo.id, { status: !todo.status }); // handleEditTodo(todo.id, {status:!todo.status})
   };
 
   const handleOpenEditMode = () => {
@@ -48,7 +46,7 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
     <>
       {!isEdit ? (
         <li className={styles.todo__item__container}>
-          <div className={styles.checkbox__container} onClick={updateTodoStatus}>
+          <div className={styles.checkbox__container} onClick={() => updateTodo(todo, { status: !todo.status })}>
             <HiCheck className={checkboxStyle} />
           </div>
 
@@ -68,13 +66,7 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
                     </div> */}
         </li>
       ) : (
-        <TodoForm
-          submitText="Edit task"
-          onSetIsShowForm={setIsEdit}
-          // oldTask={todo.task}
-          onEditTodo={onEditTodo}
-          todo={todo}
-        />
+        <TodoForm submitText="Edit task" onSetIsShowForm={setIsEdit} updateTodo={updateTodo} todo={todo} />
       )}
     </>
   );
