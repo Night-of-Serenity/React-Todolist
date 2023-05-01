@@ -23,8 +23,6 @@ export function AddTodo({ setTodos, setFilterList }) {
         <TodoForm
           submitText="Add Task"
           onSetIsShowForm={setIsAddMode}
-          // onSetIsShowForm="5555"
-
           setTodos={setTodos}
           setFilterList={setFilterList}
           // todo == undefined

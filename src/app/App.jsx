@@ -54,7 +54,7 @@ function App() {
 
   // Search Todo
   const handleSearch = (searchText) => {
-    const newTodo = todos.filter((todoObj) => todoObj.task.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
+    const newTodo = filterList.filter((todoObj) => todoObj.task.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
     // setTodos(newTodo)
     setFilterList(newTodo);
   };

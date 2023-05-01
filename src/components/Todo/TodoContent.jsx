@@ -16,7 +16,7 @@ export function TodoContent({ todos, setTodos, onTodoSort, setFilterList }) {
     const newTodos = [...todos];
 
     newTodos[foundedIndex] = { ...newTodos[foundedIndex], ...updateObj }; // ...{task: "Newtask", status : false}
-    newTodos[foundedIndex] = Object.assign({}, newTodos[foundedIndex], updateObj);
+    // newTodos[foundedIndex] = Object.assign({}, newTodos[foundedIndex], updateObj);
 
     // console.log(newTodos[foundedIndex])
     setTodos(newTodos);
