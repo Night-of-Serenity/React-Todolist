@@ -3,7 +3,7 @@ import { TodoHeader } from "./TodoHeader";
 import { TodoLists } from "./TodoLists";
 // import mockData from '../../data/todos.json';
 
-export function TodoContent({ todos, setTodos, setFilterList }) {
+export function TodoContent({ todos, setTodos, onTodoSort, setFilterList }) {
   // # Logic
 
   // UPDATE-TODO
@@ -32,7 +32,7 @@ export function TodoContent({ todos, setTodos, setFilterList }) {
   // # UI
   return (
     <main className="content">
-      <TodoHeader title="Inbox" />
+      <TodoHeader title="Inbox" onTodoSort={onTodoSort} />
       <AddTodo setTodos={setTodos} setFilterList={setFilterList} />
       <TodoLists todos={todos} onEditTodo={handleEditTodo} onDeleteTodo={handleDelete} />
     </main>

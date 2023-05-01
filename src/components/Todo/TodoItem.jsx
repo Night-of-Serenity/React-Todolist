@@ -1,6 +1,7 @@
 import styles from "./TodoItem.module.scss";
 import { useState } from "react";
 import axios from "axios";
+import { deleteTodoAPI } from "../../services/todoService";
 import { HiCheck, HiPencil, HiTrash } from "react-icons/hi";
 import { TodoForm } from "./TodoForm";
 import { getFormattedDate } from "../../utils/DateUtils";
@@ -37,7 +38,8 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
 
   const handleDeleteTodo = async (todoId) => {
     try {
-      let response = await axios.delete(`http://localhost:8080/todos/${todoId}`);
+      // let response = await axios.delete(`http://localhost:8080/todos/${todoId}`);
+      let response = await deleteTodoAPI(todoId);
       console.log(response.status);
       onDeleteTodo(todoId);
     } catch (error) {
@@ -66,10 +68,6 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
           <div className={styles.delete__icon} onClick={() => handleDeleteTodo(todo.id)}>
             <HiTrash />
           </div>
-
-          {/* <div className={styles.delete__icon} onClick={()=> onDeleteTodo(todo.id)}>
-                        <HiTrash />
-                    </div> */}
         </li>
       ) : (
         <TodoForm submitText="Edit task" onSetIsShowForm={setIsEdit} updateTodo={updateTodo} todo={todo} />
