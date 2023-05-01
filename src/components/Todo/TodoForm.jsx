@@ -2,6 +2,7 @@ import styles from "./TodoForm.module.scss";
 import React, { useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import { createTodoAPI } from "../../services/todoService";
 
 TodoForm.propTypes = {
   submitText: PropTypes.string.isRequired,
@@ -19,7 +20,8 @@ export function TodoForm({ submitText, onSetIsShowForm, todo, setTodos, setFilte
 
   const createTodo = async (todoObj) => {
     try {
-      let response = await axios.post("http://localhost:8080/todos", todoObj);
+      // let response = await axios.post("http://localhost:8080/todos", todoObj);
+      let response = await createTodoAPI(todoObj);
 
       console.log(response.status);
       console.log(response.data);

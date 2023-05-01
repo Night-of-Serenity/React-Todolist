@@ -5,7 +5,8 @@ import { Sidebar } from "../components/Sidebar";
 import { TodoContent } from "../components/Todo/TodoContent";
 // import allTodoMock from "../data/todos.json";
 import { getSevenDayRange } from "../utils/DateUtils";
-import axios from "axios";
+// import axios from "axios";
+import { getTodosAllAPI } from "../services/todoService";
 
 function App() {
   // ## LOGIC : HOOK
@@ -18,7 +19,7 @@ function App() {
     async function fetchAllTodo() {
       try {
         // let response = await axios({method:'get', url: "http://localhost:8080/todos"})
-        let response = await axios.get("http://localhost:8080/todos");
+        let response = await getTodosAllAPI();
         let todoList = response.data.todos;
         setTodos(todoList);
         setFilterList(todoList);

@@ -1,7 +1,7 @@
 import styles from "./TodoItem.module.scss";
 import { useState } from "react";
 import axios from "axios";
-import { deleteTodoAPI } from "../../services/todoService";
+import { deleteTodoAPI, updateTodoAPI } from "../../services/todoService";
 import { HiCheck, HiPencil, HiTrash } from "react-icons/hi";
 import { TodoForm } from "./TodoForm";
 import { getFormattedDate } from "../../utils/DateUtils";
@@ -22,7 +22,8 @@ export function TodoItem({ todo, onEditTodo, onDeleteTodo }) {
     try {
       // ส่ง Request
       let todoRequestObj = { ...oldTodo, ...updateObj };
-      let response = await axios.put(`http://localhost:8080/todos/${oldTodo.id}`, todoRequestObj);
+      // let response = await axios.put(`http://localhost:8080/todos/${oldTodo.id}`, todoRequestObj);
+      let response = await updateTodoAPI(oldTodo.id, todoRequestObj);
       let updatedTodo = response.data.todo;
       // sync state ใน react
       onEditTodo(updatedTodo.id, updatedTodo);
